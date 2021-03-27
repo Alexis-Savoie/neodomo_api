@@ -11,8 +11,6 @@ import bodyParser from 'body-parser'
 // Import routes
 import { routes } from './routes/indexRoute'
 
-
-
 const app = express() // Instance Express
 const port = 8020;
 
