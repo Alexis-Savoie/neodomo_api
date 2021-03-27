@@ -12,20 +12,8 @@ const createAdminRoute = express()
 // Route for the export
 createAdminRoute.post('/admin/createAdmin', (req, res) => {
 
-    let uri = 'mongodb://localhost/NeoDomo';
-    mongoose.connect(uri, (err) => {
-        if (err) {
-            console.log(err.message);
-            console.log(err);
-        }
-        else {
-            console.log('Connected to MongoDb');
-        }
-    });
-
-
     let admin = new AdminModel({
-        emailAdmin: "testEmail",
+        emailAdmin: "testEmail222",
         passwordAdmin: "testmpd"
     })
     admin.save()
