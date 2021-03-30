@@ -25,9 +25,19 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 //#endregion
 
+// Interface for the model (because Mongoose doesn't do it automatically)
+interface AdminDocument extends Document {
+    emailAdmin: string;
+    passwordAdmin: string;
+    tokenAdmin: string;
+    temporaryPasswordAdmin: string;
+    nbLoginTryAdmin: number;
+    dateBlockCooldownAdmin: Date;
+  }
+
 
 // Schema
-const AdminSchema = new Schema({
+const AdminSchema = new Schema<AdminDocument>({
     emailAdmin: {
         trim: true,
         index: true,
