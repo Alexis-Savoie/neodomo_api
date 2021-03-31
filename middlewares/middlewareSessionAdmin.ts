@@ -11,7 +11,7 @@ import { AdminModel } from "../models/adminModel"
 import path from 'path'
 import dotenv from 'dotenv'
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
-let JWT_TOKEN_SECRET: string = process.env.JWT_TOKEN_SECRET!
+let JWT_TOKEN_SECRET_ADMIN: string = process.env.JWT_TOKEN_SECRET_ADMIN!
 
 const middlewareSessionAdmin = (req: any, res: any, next: any) => {
     // Get headers and extract token
@@ -30,6 +30,7 @@ const middlewareSessionAdmin = (req: any, res: any, next: any) => {
                 });
 
         } else {
+            req.body.emailToken = token
             AdminModel.find({ tokenAdmin: token }, function (error, results) {
                 if (error) {
                     res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
@@ -51,7 +52,7 @@ const middlewareSessionAdmin = (req: any, res: any, next: any) => {
                     else {
                         var success = true
                         try {
-                            var decoded = jwt.verify(token, JWT_TOKEN_SECRET);
+                            var decoded = jwt.verify(token, JWT_TOKEN_SECRET_ADMIN);
                             req.body.email = decoded
                         } catch (e) {
                             success = false
