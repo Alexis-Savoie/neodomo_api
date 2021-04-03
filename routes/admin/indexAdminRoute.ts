@@ -2,24 +2,29 @@
 import express from "express"
 
 
-// Import Routes
-import { testRouteAdmin } from "./otherRoutes/adminTestRoute"
-import { createAdminRoute } from "./authRoutes/createAdminRoute"
-import { authAdminRoute } from "./authRoutes/authAdminRoute"
-import { logoutAdminRoute } from "./authRoutes/logoutAdminRoute"
-import { changePasswordAdminRoute } from "./authRoutes/changePasswordAdminRoute"
-import { forgotPasswordAdminRoute } from "./authRoutes/forgotPasswordAdminRoute"
-
-
-
 // Add imported routes to the admin app
 const adminRoutes = express()
 
+
+// Import Routes to group them and then export them
+
+// Auth Routes
+import { testRouteAdmin } from "./otherRoutes/adminTestRoute"
 adminRoutes.use("/", testRouteAdmin)
+import { createAdminRoute } from "./authRoutes/createAdminRoute"
 adminRoutes.use("/", createAdminRoute)
+import { authAdminRoute } from "./authRoutes/authAdminRoute"
 adminRoutes.use("/", authAdminRoute)
+import { logoutAdminRoute } from "./authRoutes/logoutAdminRoute"
 adminRoutes.use("/", logoutAdminRoute)
+import { changePasswordAdminRoute } from "./authRoutes/changePasswordAdminRoute"
 adminRoutes.use("/", changePasswordAdminRoute)
+import { forgotPasswordAdminRoute } from "./authRoutes/forgotPasswordAdminRoute"
 adminRoutes.use("/", forgotPasswordAdminRoute)
+
+// Search Routes
+import { searchPostRoute } from "./searchRoutes/searchPostRoute"
+adminRoutes.use("/", searchPostRoute)
+
 
 export { adminRoutes }
