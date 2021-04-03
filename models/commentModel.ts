@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import CommentDocumentInterface from '../interfaces/CommentDocumentInterface'
 
 // Import env variables
 import path from 'path'
@@ -32,47 +32,37 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
-        trim: true,
-        index: true,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true,
-    },
+const CommentSchema = new Schema<CommentDocumentInterface>({
 
-    passwordAdmin: {
+    idPost: {
         index: true,
         type: String,
         required: true,
     },
-
-    tokenAdmin: {
+    emailSender: {
         index: true,
         type: String,
+        required: true,
     },
-
-    temporaryPasswordAdmin: {
+    textContent: {
         index: true,
         type: String,
-        default: ""
+        required: true,
     },
-
-    nbLoginTryAdmin: {
+    replyTo: {
         index: true,
-        type: Number,
-        default: 0
+        type: String,
+        required: true,
     },
-
-    dateBlockCooldownAdmin: {
-        index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
+    listReport: [{
+        id: {
+            type: String,
+            required: true,
+        }
+    }],
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const CommentModel = mongoose.model('comment', CommentSchema);
 
-export { AdminModel }
+export { CommentModel }
