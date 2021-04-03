@@ -10,10 +10,10 @@ import { middlewareSessionUser } from '../../../middlewares/middlewareSessionUse
 // Import models
 import { UserModel } from "../../../models/userModel"
 
-const changePasswordUserRoute = express()
+const changePasswordAppRoute = express()
 
 // Route for the export
-changePasswordUserRoute.put('/application/changePassword', middlewareSyntax, middlewareSessionUser, (req, res) => {
+changePasswordAppRoute.put('/application/changePassword', middlewareSyntax, middlewareSessionUser, (req, res) => {
 
     UserModel.find({ tokenUser: req.body.emailToken }, function (error, results) {
         // mongodb error case
@@ -87,4 +87,4 @@ changePasswordUserRoute.put('/application/changePassword', middlewareSyntax, mid
     })
 })
 
-export { changePasswordUserRoute }
+export { changePasswordAppRoute }
