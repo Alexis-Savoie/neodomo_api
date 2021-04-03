@@ -13,7 +13,7 @@ import { UserModel } from "../../../models/userModel"
 
 //const createAdminRouteAdminModel= require("../../models/adminModel")
 
-
+// Init branch
 
 const searchPostRoute = express()
 
