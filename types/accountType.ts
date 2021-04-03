@@ -1,0 +1,1 @@
+export type accountType = 'eleve' | 'staff' | 'association';

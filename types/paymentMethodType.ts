@@ -1,0 +1,1 @@
+export type paymentMethodType = 'CB' | 'other';

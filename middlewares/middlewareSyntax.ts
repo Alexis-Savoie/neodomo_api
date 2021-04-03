@@ -53,7 +53,7 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
         res.status(403).json(
             {
                 error: true,
-                message: "One of the sended datas are invalid"
+                message: "Une ou plusieurs données sont erronées"
             });
     }
     else {

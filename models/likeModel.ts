@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import LikeDocumentInterface from '../interfaces/LikeDocumentInterface'
 
 // Import env variables
 import path from 'path'
@@ -32,47 +32,21 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
-        trim: true,
-        index: true,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true,
-    },
-
-    passwordAdmin: {
+const LikeSchema = new Schema<LikeDocumentInterface>({
+    idPost: {
         index: true,
         type: String,
         required: true,
     },
 
-    tokenAdmin: {
+    emailLike: {
         index: true,
         type: String,
+        required: true,
     },
-
-    temporaryPasswordAdmin: {
-        index: true,
-        type: String,
-        default: ""
-    },
-
-    nbLoginTryAdmin: {
-        index: true,
-        type: Number,
-        default: 0
-    },
-
-    dateBlockCooldownAdmin: {
-        index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const LikeModel = mongoose.model('like', LikeSchema);
 
-export { AdminModel }
+export { LikeModel }

@@ -10,11 +10,9 @@ declare global {
         RESETPASSWORD: string
 
         STRIPESKEY: string
-        ADMINKEY: string
 
-        JWT_ACCESS_TOKEN_EXP: number
-        JWT_REFRESH_TOKEN_EXP: number
-        JWT_TOKEN_SECRET: string
+        JWT_TOKEN_SECRET_USER: string
+        JWT_TOKEN_SECRET_ADMIN: string
       }
     }
   }
