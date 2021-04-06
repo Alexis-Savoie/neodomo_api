@@ -23,7 +23,7 @@ import { forgotPasswordAdminRoute } from "./authRoutes/forgotPasswordAdminRoute"
 adminRoutes.use("/", forgotPasswordAdminRoute)
 
 // Search Routes
-import { searchPostRoute } from "./searchRoutes/searchPostRoute"
+import { searchPostRoute } from "./searchDataRoutes/searchPostRoute"
 adminRoutes.use("/", searchPostRoute)
 
 
