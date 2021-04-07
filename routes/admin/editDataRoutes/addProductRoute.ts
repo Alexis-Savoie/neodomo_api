@@ -15,7 +15,7 @@ import { ProductModel } from "../../../models/productModel"
 const addProductRoute = express()
 
 // Route for the export
-addProductRoute.post('/admin/addAdmin', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
+addProductRoute.post('/admin/addProduct', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
     let product = new ProductModel({
         nameProduct: req.body.nameProduct,
         description: req.body.description,
