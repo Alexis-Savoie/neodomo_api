@@ -32,5 +32,8 @@ adminRoutes.use("/", searchProductRoute)
 // Edit data routes
 import { addProductRoute } from "./editDataRoutes/addProductRoute"
 adminRoutes.use("/", addProductRoute)
+import { editProductRoute } from "./editDataRoutes/editProductRoute"
+adminRoutes.use("/", editProductRoute)
+
 
 export { adminRoutes }
