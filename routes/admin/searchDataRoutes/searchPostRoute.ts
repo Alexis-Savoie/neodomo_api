@@ -6,10 +6,11 @@ import bcrypt from 'bcrypt'
 // Import middleware
 import { middlewareSyntax } from '../../../middlewares/middlewareSyntax'
 import { middlewareSessionAdmin } from '../../../middlewares/middlewareSessionAdmin'
+import { middlewareSyntaxSearchNumber } from '../../../middlewares/middlewareSyntaxSearchNumber'
 
 // Import models
-import { AdminModel } from "../../../models/adminModel"
-import { UserModel } from "../../../models/userModel"
+import { PostModel } from "../../../models/postModel"
+
 
 //const createAdminRouteAdminModel= require("../../models/adminModel")
 
@@ -18,32 +19,75 @@ import { UserModel } from "../../../models/userModel"
 const searchPostRoute = express()
 
 // Route for the export
-searchPostRoute.post('/admin/searchPost', (req, res) => {
+searchPostRoute.post('/admin/searchPost', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
+    let postSearch: any = {}
 
-    let admin = new AdminModel({
-        emailAdmin: req.body.email,
-        passwordAdmin: req.body.password
+    if (req.body.emailPublisher != undefined && req.body.emailPublisher != "") {
+        let regex = new RegExp(req.body.emailPublisher, "i")
+        postSearch.emailPublisher = { $regex: regex }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (req.body.textContent != undefined && req.body.textContent != "") {
+        let regex = new RegExp(req.body.textContent, "i")
+        postSearch.textContent = { $regex: regex }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Have report part
+    if (req.body.haveReport != undefined && req.body.haveReport != "") {
+        if (req.body.haveReport == true)
+        {
+            // to check if a array is lower/greater than is to check his index with { "$exists": true }
+            postSearch["listReport.0"] = { "$exists": true }
+        }
+        else {
+            postSearch["listReport.0"] = { "$exists": false }
+        }
+    }
+
+        
+ 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // CreatedAt part
+    let createdAtFrom = new Date(2000, 1, 1) 
+    let createdAtAt = new Date(3000, 1, 1) 
+    if (req.body.createdAtFrom != undefined && req.body.createdAtFrom != "") {
+        createdAtFrom = new Date(req.body.createdAtFrom)
+    }
+    if (req.body.createdAtAt != undefined && req.body.createdAtAt != "") {
+        createdAtAt = new Date(req.body.createdAtAt)
+    }
+    postSearch.createdAt = { $gte: createdAtFrom, $lte: createdAtAt }
+
+
+
+
+    PostModel.find(postSearch, function (error, results) {
+        if (results.length == 0) {
+            res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+            res.status(200).json(
+                {
+                    error: false,
+                    message: "succès (vide)"
+                });
+        }
+        else {
+            res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+            res.status(200).json(
+                {
+                    error: false,
+                    message: "succès (non-vide)",
+                    posts: results
+                });
+        }
+
     })
 
-    let user = new UserModel({
-        emailUser: req.body.email,
-        passwordUser: req.body.password,
-        listFollow: [{
-            emailUser: "test1@email.fr"
-        },
-        {
-            emailUser: "test2@email.fr"
-        }]
 
-    })
-    user.save()
-    admin.save()
-    res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
-    res.status(201).json(
-        {
-            error: false,
-            message: "Test réussi :D"
-        });
+
 
 })
 

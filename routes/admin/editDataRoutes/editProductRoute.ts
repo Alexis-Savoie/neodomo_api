@@ -15,7 +15,7 @@ import { ProductModel } from "../../../models/productModel"
 const editProductRoute = express()
 
 // Route for the export
-editProductRoute.post('/admin/editProduct', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
+editProductRoute.put('/admin/editProduct', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
 
     let productUpdate: any = {}
 
