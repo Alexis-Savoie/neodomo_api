@@ -8,7 +8,7 @@ const adminRoutes = express()
 
 // Import Routes to group them and then export them
 
-// Auth Routes
+// Auth routes
 import { testRouteAdmin } from "./otherRoutes/adminTestRoute"
 adminRoutes.use("/", testRouteAdmin)
 import { createAdminRoute } from "./authRoutes/createAdminRoute"
@@ -22,9 +22,22 @@ adminRoutes.use("/", changePasswordAdminRoute)
 import { forgotPasswordAdminRoute } from "./authRoutes/forgotPasswordAdminRoute"
 adminRoutes.use("/", forgotPasswordAdminRoute)
 
-// Search Routes
-import { searchPostRoute } from "./searchRoutes/searchPostRoute"
+// Search data routes
+import { searchPostRoute } from "./searchDataRoutes/searchPostRoute"
 adminRoutes.use("/", searchPostRoute)
+import { searchProductRoute } from "./searchDataRoutes/searchProductRoute"
+adminRoutes.use("/", searchProductRoute)
+
+
+// Edit data routes
+import { addProductRoute } from "./editDataRoutes/addProductRoute"
+adminRoutes.use("/", addProductRoute)
+import { editProductRoute } from "./editDataRoutes/editProductRoute"
+adminRoutes.use("/", editProductRoute)
+import { deletePostRoute } from "./editDataRoutes/deletePostRoute"
+adminRoutes.use("/", deletePostRoute)
+import { deleteProductRoute } from "./editDataRoutes/deleteProductRoute"
+adminRoutes.use("/", deleteProductRoute)
 
 
 export { adminRoutes }
