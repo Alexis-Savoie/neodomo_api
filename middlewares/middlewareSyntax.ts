@@ -16,7 +16,8 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
             (req.body.idPost != undefined && req.body.idPost == "") ||
             (req.body.emailSender != undefined && req.body.emailSender == "") ||
             (req.body.replyTo != undefined && req.body.replyTo == "") ||
-            (req.body.accountType != undefined && req.body.accountType == "") ||
+            (req.body.gender != undefined && (req.body.gender == "" || req.body.gender != "Homme" || req.body.gender != "Femme" || req.body.gender != "Autre")) ||
+            (req.body.accountType != undefined && (req.body.accountType == "" || req.body.accountType != "eleve" || req.body.accountType != "staff" || req.body.accountType != "association")) ||
             (req.body.status != undefined && req.body.status == "") ||
             (req.body.isBlocked != undefined && req.body.isBlocked == "") ||
             (req.body.lastActivityFrom != undefined && req.body.lastActivityFrom == "") ||

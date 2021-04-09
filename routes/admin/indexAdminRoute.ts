@@ -36,6 +36,8 @@ import { editProductRoute } from "./editDataRoutes/editProductRoute"
 adminRoutes.use("/", editProductRoute)
 import { deletePostRoute } from "./editDataRoutes/deletePostRoute"
 adminRoutes.use("/", deletePostRoute)
+import { deleteProductRoute } from "./editDataRoutes/deleteProductRoute"
+adminRoutes.use("/", deleteProductRoute)
 
 
 export { adminRoutes }
