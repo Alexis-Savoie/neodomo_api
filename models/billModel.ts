@@ -23,7 +23,7 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
         console.log(err);
     }
     else {
-        console.log('Connected to MongoDb');
+        //console.log('Connected to MongoDb');
     }
 });
 
