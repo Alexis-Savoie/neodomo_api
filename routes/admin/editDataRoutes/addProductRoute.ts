@@ -24,13 +24,14 @@ addProductRoute.post('/admin/addProduct', middlewareSyntax, middlewareSessionAdm
         imageURL: req.body.imageURL
     })
 
-    product.save()
-    res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
-    res.status(201).json(
-        {
-            error: false,
-            message: "Le nouveau produit à été ajouté avec succès."
-        });
+    product.save().then(() => {
+        res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+        res.status(201).json(
+            {
+                error: false,
+                message: "Le nouveau produit à été ajouté avec succès."
+            });
+    })
 })
 
 

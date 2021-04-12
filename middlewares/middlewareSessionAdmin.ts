@@ -53,7 +53,7 @@ const middlewareSessionAdmin = (req: any, res: any, next: any) => {
                         var success = true
                         try {
                             var decoded = jwt.verify(token, JWT_TOKEN_SECRET_ADMIN);
-                            req.body.email = decoded
+                            req.body.emailToken = decoded
                         } catch (e) {
                             success = false
                             res.setHeader("Content-Type", "application/json"); // Typage de la data de retour

@@ -31,6 +31,7 @@ createAdminRoute.post('/admin/createAdmin', middlewareSyntax, middlewareSessionA
         else {
             // Check if a admin already use this email address
             if (results.length > 0) {
+                console.log(results)
                 res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
                 res.status(409).json(
                     {
@@ -46,13 +47,14 @@ createAdminRoute.post('/admin/createAdmin', middlewareSyntax, middlewareSessionA
                 // Hash the password
                 const salt = bcrypt.genSaltSync(10)
                 admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
-                admin.save()
-                res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
-                res.status(201).json(
-                    {
-                        error: false,
-                        message: "L'administrateur a été créer avec succès"
-                    });
+                admin.save().then(() => {
+                    res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+                    res.status(201).json(
+                        {
+                            error: false,
+                            message: "L'administrateur a été créer avec succès"
+                        });
+                })
             }
         }
 
