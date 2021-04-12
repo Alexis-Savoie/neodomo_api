@@ -97,4 +97,54 @@ describe('authAdminRoute error cases', () => {
         })
     })
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('Too many failed attempts', (done) => {
+        let emailForTest = "authAdminRoute_3@email.com"
+        // Create an admin for the test
+        let admin = new AdminModel({
+            emailAdmin: emailForTest,
+            passwordAdmin: testCorrectPassword
+        })
+        // Hash the password
+        const salt = bcrypt.genSaltSync(10)
+        admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
+        admin.save().then(() => {
+            request(API_URL)
+                .post('/admin/login')
+                .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                .set('Accept', 'application/json')
+                .expect(400)
+                .end(function (err: any, res: any) {
+                    if (err) throw err;
+                    else {
+                        request(API_URL)
+                        .post('/admin/login')
+                        .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                        .set('Accept', 'application/json')
+                        .expect(400)
+                        .end(function (err: any, res: any) {
+                            if (err) throw err;
+                            else {
+                                request(API_URL)
+                                .post('/admin/login')
+                                .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                                .set('Accept', 'application/json')
+                                .expect({ "error": true, "message": "Trop de tentatives réessayer plus tard." })
+                                .end(function (err: any, res: any) {
+                                    if (err) throw err;
+                                    else {
+                                        AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
+                                            return done()
+                                        })
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
+        })
+    })
+
+
 })
