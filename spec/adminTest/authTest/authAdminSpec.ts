@@ -17,8 +17,7 @@ let API_URL: string = process.env.API_URL!
 let testCorrectPassword = "bonjour123"
 let testIncorrectPassword = "bonjour1234"
 
-describe('authAdminRoute', () => {
-
+describe('authAdminRoute success cases', () => {
 
     it('Correct case', (done) => {
         let emailForTest = "authAdminRoute_1@email.com"
@@ -35,15 +34,42 @@ describe('authAdminRoute', () => {
                 .post('/admin/login')
                 .send('email=' + emailForTest + '&password=' + testCorrectPassword)
                 .set('Accept', 'application/json')
-                .expect(200, done)
+                .expect(200)
+                .end(function (err: any, res: any) {
+                    if (err) throw err;
+                    else {
+                        AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
+                            return done()
+                        })
+                    }
+                })
         })
     })
 
+})
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    it('Correct case', (done) => {
+describe('authAdminRoute error cases', () => {
+
+    it('Invalid email', (done) => {
+        let emailForTest = "authAdminRouteemail.com"
+
+        request(API_URL)
+            .post('/admin/login')
+            .send('email=' + emailForTest + '&password=' + testCorrectPassword)
+            .set('Accept', 'application/json')
+            .expect(403, done)
+
+    })
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('Incorrect creditentials (email)', (done) => {
         let emailForTest = "authAdminRoute_2@email.com"
         let emailForTestFalse = "authAdminRoute_false@email.com"
         // Create an admin for the test
@@ -59,8 +85,16 @@ describe('authAdminRoute', () => {
                 .post('/admin/login')
                 .send('email=' + emailForTestFalse + '&password=' + testCorrectPassword)
                 .set('Accept', 'application/json')
-                .expect(400, done)
+                .expect(400)
+                .end(function (err: any, res: any) {
+                    if (err) throw err;
+                    else {
+                        AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
+                            return done()
+                        })
+                    }
+                })
         })
     })
-    
+
 })
