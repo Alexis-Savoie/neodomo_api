@@ -35,8 +35,6 @@ editProductRoute.put('/admin/editProduct', middlewareSyntax, middlewareSessionAd
         productUpdate.imageURL = req.body.imageURL
 
 
-
-
     ProductModel.findOneAndUpdate({ _id: req.body.idProduct }, productUpdate, { upsert: true }, function (error, results) {
         res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
         res.status(200).json(

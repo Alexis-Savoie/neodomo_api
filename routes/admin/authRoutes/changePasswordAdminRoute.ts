@@ -19,7 +19,7 @@ const changePasswordAdminRoute = express()
 // Route for the export
 changePasswordAdminRoute.put('/admin/changePassword', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
 
-    AdminModel.find({ tokenAdmin: req.body.emailToken }, function (error, results) {
+    AdminModel.find({ emailAdmin: req.body.emailToken }, function (error, results) {
         // mongodb error case
         if (error) {
             res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
@@ -29,6 +29,7 @@ changePasswordAdminRoute.put('/admin/changePassword', middlewareSyntax, middlewa
                     message: "Server Error"
                 });
         }
+
 
         else {
             // Check if the original password is correct
@@ -86,8 +87,6 @@ changePasswordAdminRoute.put('/admin/changePassword', middlewareSyntax, middlewa
                 }
             })
         }
-
-
     })
 })
 
