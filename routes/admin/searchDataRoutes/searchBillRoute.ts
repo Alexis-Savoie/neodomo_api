@@ -57,7 +57,7 @@ searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSynt
 
 
     // dateBill part
-    let dateBillMin = new Date(2000, 1, 1)
+    let dateBillMin = new Date(1900, 1, 1)
     let dateBillMax = new Date(3000, 1, 1)
     if (req.body.dateBillMin != undefined && req.body.dateBillMin != "") {
         dateBillMin = new Date(req.body.dateBillMin)

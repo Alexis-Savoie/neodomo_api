@@ -35,13 +35,33 @@ editProductRoute.put('/admin/editProduct', middlewareSyntax, middlewareSessionAd
         productUpdate.imageURL = req.body.imageURL
 
 
-    ProductModel.findOneAndUpdate({ _id: req.body.idProduct }, productUpdate, { upsert: true }, function (error, results) {
-        res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
-        res.status(200).json(
-            {
-                error: false,
-                message: "Le produit à été modifié avec succès."
-            });
+    ProductModel.findOneAndUpdate({ _id: req.body.idProduct }, productUpdate, null, function (error, results) {
+        if (error) {
+            res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+            res.status(500).json(
+                {
+                    error: true,
+                    message: "Server Error"
+                });
+        }
+        else {
+            if (results == null) {
+                res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+                res.status(422).json(
+                    {
+                        error: true,
+                        message: "Ce produit n'existe pas"
+                    });
+            }
+            else {
+                res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+                res.status(200).json(
+                {
+                    error: false,
+                    message: "Le produit à été modifié avec succès."
+                });
+            }
+        }
     })
 })
 

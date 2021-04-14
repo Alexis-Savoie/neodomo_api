@@ -226,7 +226,7 @@ describe('searchPostRoute success cases', () => {
                             let token = res.body.token
                             request(API_URL)
                                 .post('/admin/searchPost')
-                                .send('createdAtAt=' + "2000-01-01")
+                                .send('createdAtAt=' + "1900-01-01")
                                 .set('Accept', 'application/json')
                                 .set('Authorization', 'Bearer ' + token)
                                 .expect(200)

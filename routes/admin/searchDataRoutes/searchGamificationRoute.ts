@@ -38,7 +38,7 @@ searchGamificationRoute.post('/admin/searchGaming', middlewareSessionAdmin, midd
     ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // CreatedAt part
-    let createdAtFrom = new Date(2000, 1, 1) 
+    let createdAtFrom = new Date(1900, 1, 1) 
     let createdAtAt = new Date(3000, 1, 1) 
     if (req.body.createdAtFrom != undefined && req.body.createdAtFrom != "") {
         createdAtFrom = new Date(req.body.createdAtFrom)
