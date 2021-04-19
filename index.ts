@@ -40,4 +40,4 @@ app.use(routes)
 
 
 // Run serve
-app.listen(port, () => console.log(`listening on http://localhost:${port}`))
+app.listen(port, () => console.log("listening on " + process.env.API_URL))
