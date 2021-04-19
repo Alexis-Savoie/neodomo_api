@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import ProductDocumentInterface from '../interfaces/ProductDocumentInterface'
 
 // Import env variables
 import path from 'path'
@@ -32,47 +32,41 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
-        trim: true,
-        index: true,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true,
-    },
-
-    passwordAdmin: {
+const ProductSchema = new Schema<ProductDocumentInterface>({
+    nameProduct: {
         index: true,
         type: String,
         required: true,
     },
-
-    tokenAdmin: {
+    description: {
         index: true,
         type: String,
+        required: true,
     },
-
-    temporaryPasswordAdmin: {
-        index: true,
-        type: String,
-        default: ""
-    },
-
-    nbLoginTryAdmin: {
+    price: {
         index: true,
         type: Number,
-        default: 0
+        required: true,
     },
-
-    dateBlockCooldownAdmin: {
+    availableStock: {
         index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
+        type: Number,
+        required: true,
+    },
+    imageURL: {
+        index: true,
+        type: String,
+        required: true,
+    },
+    listBill: [{
+        id: {
+            type: String,
+            required: true,
+        }
+    }],
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const ProductModel = mongoose.model('product', ProductSchema);
 
-export { AdminModel }
+export { ProductModel }

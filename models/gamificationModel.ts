@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import GamificationDocumentInterface from '../interfaces/GamificationDocumentInterface'
 
 // Import env variables
 import path from 'path'
@@ -30,49 +30,22 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 
-
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
-        trim: true,
-        index: true,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true,
-    },
-
-    passwordAdmin: {
+const GamificationSchema = new Schema<GamificationDocumentInterface>({
+    emailWinner: {
         index: true,
         type: String,
         required: true,
     },
-
-    tokenAdmin: {
-        index: true,
-        type: String,
-    },
-
-    temporaryPasswordAdmin: {
-        index: true,
-        type: String,
-        default: ""
-    },
-
-    nbLoginTryAdmin: {
+    levelGet: {
         index: true,
         type: Number,
-        default: 0
+        required: true,
     },
 
-    dateBlockCooldownAdmin: {
-        index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const GamificationModel = mongoose.model('gamification', GamificationSchema);
 
-export { AdminModel }
+export { GamificationModel }

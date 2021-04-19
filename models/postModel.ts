@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import PostDocumentInterface from '../interfaces/PostDocumentInterface'
 
 // Import env variables
 import path from 'path'
@@ -32,8 +32,8 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
+const PostSchema = new Schema<PostDocumentInterface>({
+    emailPublisher: {
         trim: true,
         index: true,
         type: String,
@@ -42,37 +42,42 @@ const AdminSchema = new Schema<AdminDocumentInterface>({
         unique: true,
     },
 
-    passwordAdmin: {
+    textContent: {
         index: true,
         type: String,
         required: true,
     },
 
-    tokenAdmin: {
-        index: true,
-        type: String,
-    },
+    listImage: [{
+        URL: {
+            type: String,
+            required: true,
+        }
+    }],
 
-    temporaryPasswordAdmin: {
-        index: true,
-        type: String,
-        default: ""
-    },
+    listLike: [{
+        id: {
+            type: String,
+            required: true,
+        }
+    }],
 
-    nbLoginTryAdmin: {
-        index: true,
-        type: Number,
-        default: 0
-    },
+    listComment: [{
+        id: {
+            type: String,
+            required: true,
+        }
+    }],
 
-    dateBlockCooldownAdmin: {
-        index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
+    listReport: [{
+        id: {
+            type: String,
+            required: true,
+        }
+    }],
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const PostModel = mongoose.model('post', PostSchema);
 
-export { AdminModel }
+export { PostModel }

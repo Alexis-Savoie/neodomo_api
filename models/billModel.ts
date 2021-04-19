@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
 // Import interfaces
-import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+import BillDocumentInterface from '../interfaces/BillDocumentInterface'
+
 
 // Import env variables
 import path from 'path'
@@ -32,47 +33,47 @@ mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err
 
 
 // Schema
-const AdminSchema = new Schema<AdminDocumentInterface>({
-    emailAdmin: {
-        trim: true,
-        index: true,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true,
-    },
-
-    passwordAdmin: {
-        index: true,
-        type: String,
-        required: true,
-    },
-
-    tokenAdmin: {
-        index: true,
-        type: String,
-    },
-
-    temporaryPasswordAdmin: {
-        index: true,
-        type: String,
-        default: ""
-    },
-
-    nbLoginTryAdmin: {
+const BillSchema = new Schema<BillDocumentInterface>({
+    numberBill: {
         index: true,
         type: Number,
-        default: 0
+        required: true,
+        unique: true,
     },
-
-    dateBlockCooldownAdmin: {
+    emailBuyer: {
         index: true,
-        type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
-    }
+        type: String,
+        required: true,
+    },
+    description: {
+        index: true,
+        type: String,
+        required: true,
+    },
+    price: {
+        index: true,
+        type: Number,
+        required: true,
+    },
+    paymentMethod: {
+        index: true,
+        type: String,
+        enum: ['CB' , 'other'],
+        required: true,
+    },
+    dateBill: {
+        index: true,
+        type: String,
+        required: true,
+    },
+    idProduct: {
+        index: true,
+        type: String,
+        required: true,
+    },
 
 }, { timestamps: true })
   
-const AdminModel = mongoose.model('admin', AdminSchema);
+const BillModel = mongoose.model('bill', BillSchema);
 
-export { AdminModel }
+export { BillModel }
