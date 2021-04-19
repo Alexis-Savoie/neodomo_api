@@ -17,9 +17,9 @@ import { AdminModel } from "../../../models/adminModel"
 const logoutAdminRoute = express()
 
 // Route for the export
-logoutAdminRoute.delete('/admin/logout', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
-
-    AdminModel.findOneAndUpdate({ tokenAdmin: req.body.emailToken }, { tokenAdmin: "" }, { upsert: true }, function (error, results) {
+logoutAdminRoute.delete('/admin/logout', middlewareSessionAdmin, middlewareSyntax, (req, res) => {
+    AdminModel.findOneAndUpdate({ emailAdmin: req.body.emailToken }, { tokenAdmin: "" }, null, function (error, results) {
+        
         if (error) {
             res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
             res.status(500).json(
