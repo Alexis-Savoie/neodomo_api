@@ -20,10 +20,10 @@ let RESETPASSWORD: string = process.env.RESETPASSWORD!
 
 
 
-const forgotPasswordAppRoute = express()
+const forgotPasswordUserRoute = express()
 
 // Route for the export
-forgotPasswordAppRoute.post('/application/forgotPassword', middlewareSyntax, (req, res) => {
+forgotPasswordUserRoute.post('/application/forgotPassword', middlewareSyntax, (req, res) => {
 
     UserModel.find({ emailUser: req.body.email }).then((user: any) => {
         if (user.length == 0) {
@@ -94,4 +94,4 @@ forgotPasswordAppRoute.post('/application/forgotPassword', middlewareSyntax, (re
 })
 
 
-export { forgotPasswordAppRoute }
+export { forgotPasswordUserRoute }

@@ -19,11 +19,11 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 let JWT_TOKEN_SECRET_USER: string = process.env.JWT_TOKEN_SECRET_USER!
 
 
-const authAppRoute = express()
+const authUserRoute = express()
 
 
 // Route for the export
-authAppRoute.post('/application/login', middlewareSyntax, (req, res) => {
+authUserRoute.post('/application/login', middlewareSyntax, (req, res) => {
     // check if an user is registered with this username
     UserModel.find({ emailUser: req.body.email }, function (error, results) {
         if (error) {
@@ -182,4 +182,4 @@ authAppRoute.post('/application/login', middlewareSyntax, (req, res) => {
 })
 
 
-export { authAppRoute }
+export { authUserRoute }
