@@ -30,7 +30,6 @@ const middlewareSessionAdmin = (req: any, res: any, next: any) => {
                 });
 
         } else {
-            req.body.emailToken = token
             AdminModel.find({ tokenAdmin: token }, function (error, results) {
                 if (error) {
                     res.setHeader("Content-Type", "application/json"); // Typage de la data de retour

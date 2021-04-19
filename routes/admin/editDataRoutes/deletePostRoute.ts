@@ -18,6 +18,7 @@ const deletePostRoute = express()
 deletePostRoute.delete('/admin/deletePost', middlewareSyntax, middlewareSessionAdmin, (req, res) => {
     PostModel.findOneAndDelete({ _id: req.body.idPost }, null, function (err, results) {
         if (err) {
+            console.log(err)
             res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
             res.status(500).json(
                 {

@@ -21,7 +21,7 @@ let post = new PostModel({
 post.save()
 */
 const app = express() // Instance Express
-const port = 8020;
+
 
 // Import env variables
 import path from 'path'
@@ -40,4 +40,4 @@ app.use(routes)
 
 
 // Run serve
-app.listen(port, () => console.log(`listening on http://localhost:${port}`))
+app.listen(process.env.PORT || 8020, () => console.log("listening on " + process.env.API_URL))

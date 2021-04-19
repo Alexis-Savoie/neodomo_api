@@ -15,11 +15,12 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 let API_URL: string = process.env.API_URL!
 
 let testCorrectPassword = "bonjour123"
+let testTemporaryPassword = "bonsoir123"
 let testIncorrectPassword = "bonjour1234"
 
 describe('authAdminRoute success cases', () => {
 
-    it('Correct case', (done) => {
+    it('Correct case (with non temporary password)', (done) => {
         let emailForTest = "authAdminRoute_1@email.com"
         // Create an admin for the test
         let admin = new AdminModel({
@@ -33,6 +34,37 @@ describe('authAdminRoute success cases', () => {
             request(API_URL)
                 .post('/admin/login')
                 .send('email=' + emailForTest + '&password=' + testCorrectPassword)
+                .set('Accept', 'application/json')
+                .expect(200)
+                .end(function (err: any, res: any) {
+                    if (err) throw err;
+                    else {
+                        AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
+                            return done()
+                        })
+                    }
+                })
+        })
+    })
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('Correct case (with temporary password)', (done) => {
+        let emailForTest = "authAdminRoute_1@email.com"
+        // Create an admin for the test
+        let admin = new AdminModel({
+            emailAdmin: emailForTest,
+            passwordAdmin: testCorrectPassword,
+            temporaryPasswordAdmin: testTemporaryPassword
+        })
+        // Hash the password
+        const salt = bcrypt.genSaltSync(10)
+        admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
+        admin.temporaryPasswordAdmin = bcrypt.hashSync(admin.temporaryPasswordAdmin, salt)
+        admin.save().then(() => {
+            request(API_URL)
+                .post('/admin/login')
+                .send('email=' + emailForTest + '&password=' + testTemporaryPassword)
                 .set('Accept', 'application/json')
                 .expect(200)
                 .end(function (err: any, res: any) {
@@ -67,7 +99,7 @@ describe('authAdminRoute error cases', () => {
 
     })
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     it('Incorrect creditentials (email)', (done) => {
         let emailForTest = "authAdminRoute_2@email.com"
@@ -96,5 +128,55 @@ describe('authAdminRoute error cases', () => {
                 })
         })
     })
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    it('Too many failed attempts', (done) => {
+        let emailForTest = "authAdminRoute_3@email.com"
+        // Create an admin for the test
+        let admin = new AdminModel({
+            emailAdmin: emailForTest,
+            passwordAdmin: testCorrectPassword
+        })
+        // Hash the password
+        const salt = bcrypt.genSaltSync(10)
+        admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
+        admin.save().then(() => {
+            request(API_URL)
+                .post('/admin/login')
+                .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                .set('Accept', 'application/json')
+                .expect(400)
+                .end(function (err: any, res: any) {
+                    if (err) throw err;
+                    else {
+                        request(API_URL)
+                            .post('/admin/login')
+                            .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                            .set('Accept', 'application/json')
+                            .expect(400)
+                            .end(function (err: any, res: any) {
+                                if (err) throw err;
+                                else {
+                                    request(API_URL)
+                                        .post('/admin/login')
+                                        .send('email=' + emailForTest + '&password=' + testIncorrectPassword)
+                                        .set('Accept', 'application/json')
+                                        .expect({ "error": true, "message": "Trop de tentatives réessayer plus tard." })
+                                        .end(function (err: any, res: any) {
+                                            if (err) throw err;
+                                            else {
+                                                AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
+                                                    return done()
+                                                })
+                                            }
+                                        })
+                                }
+                            })
+                    }
+                })
+        })
+    })
+
 
 })
