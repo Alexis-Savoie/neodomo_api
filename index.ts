@@ -1,6 +1,7 @@
 // Import npm modules
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 // Import routes
 import { routes } from './routes/indexRoute'
@@ -34,6 +35,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+// Accept cords 
+app.use(cors());
 
 // Use all the routes on the express instance
 app.use(routes)
