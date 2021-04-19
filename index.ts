@@ -40,4 +40,4 @@ app.use(routes)
 
 
 // Run serve
-app.listen(port  || 5000, () => console.log("listening on " + process.env.API_URL))
+app.listen(port || 5000, () => console.log("listening on " + process.env.API_URL))
