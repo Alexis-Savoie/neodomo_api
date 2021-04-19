@@ -61,11 +61,6 @@ const BillSchema = new Schema<BillDocumentInterface>({
         enum: ['CB' , 'other'],
         required: true,
     },
-    dateBill: {
-        index: true,
-        type: String,
-        required: true,
-    },
     idProduct: {
         index: true,
         type: String,

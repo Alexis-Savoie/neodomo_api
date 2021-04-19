@@ -13,6 +13,5 @@ export default interface BillDocumentInterface extends Document {
   description: string;
   price: number;
   paymentMethod: paymentMethodType;
-  dateBill: Date;
   idProduct: string;
   }
