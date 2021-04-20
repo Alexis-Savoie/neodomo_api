@@ -79,14 +79,19 @@ let user = new UserModel({
 })
 
 
+const foo = async () => {
+    await admin.save()
+    await bill.save()
+    await comment.save()
+    await gamification.save()
+    await message.save()
+    await post.save()
+    await product.save()
+    await user.save()
+    console.log("insertion done")
+  };
+
+foo()
 
 
 
-admin.save()
-bill.save()
-comment.save()
-gamification.save()
-message.save()
-post.save()
-product.save()
-user.save()
