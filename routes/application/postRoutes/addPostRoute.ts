@@ -16,10 +16,11 @@ const addPostRoute = express()
 // Route for the export
 addPostRoute.post('/application/addPost', middlewareSyntax, middlewareSessionUser, (req, res) => {
     let post = new PostModel({
-        idPost: req.body.idPost,
-        emailSender: req.body.emailSender,
+        emailPublisher: req.body.emailPublisher,
         textContent: req.body.textContent,
-        replyTo: req.body.replyTo,
+        listImage: req.body.listImage,
+        listLike: req.body.listLike,
+        listComment: req.body.listComment,
         listReport: req.body.listReport
     })
 
