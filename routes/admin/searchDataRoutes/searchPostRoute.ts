@@ -85,10 +85,6 @@ searchPostRoute.post('/admin/searchPost', middlewareSessionAdmin, middlewareSynt
         }
 
     })
-
-
-
-
 })
 
 

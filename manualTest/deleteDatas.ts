@@ -22,7 +22,7 @@ AdminModel.deleteMany({}).then(function(){
                         ProductModel.deleteMany({}).then(function(){
                             UserModel.deleteMany({}).then(function(){
                                 console.log("données supprimés")
-                                return
+                                process.exit(1)
                             })
                         })
                     })

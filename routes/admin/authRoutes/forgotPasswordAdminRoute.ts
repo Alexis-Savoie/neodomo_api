@@ -62,7 +62,7 @@ forgotPasswordAdminRoute.post('/admin/forgotPassword', middlewareSyntax, (req, r
                     let mailOptions = {
                         from: RESETEMAIL,
                         to: req.body.email,
-                        subject: "Mot de passe temporaire ProjetNodeAj 👻", // Subject line
+                        subject: "Mot de passe temporaire NeoDomo 👻", // Subject line
                         text: "Voici votre mot de passe temporaire: " + temporaryPassword,
                     };
 
