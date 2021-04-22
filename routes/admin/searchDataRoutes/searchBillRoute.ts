@@ -24,7 +24,7 @@ searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSynt
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.numberBill != undefined && req.body.numberBill != "") {
-        billSearch.numberBill = req.body.numberBill
+        billSearch.numberBill = parseInt(req.body.numberBill)
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.emailBuyer != undefined && req.body.emailBuyer != "") {
@@ -66,8 +66,6 @@ searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSynt
         createdAtAt = new Date(req.body.createdAtAt)
     }
     billSearch.createdAt = { $gte: createdAtFrom, $lte: createdAtAt }
-
-
 
 
     BillModel.find(billSearch, function (error, results) {

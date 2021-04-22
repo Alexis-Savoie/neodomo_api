@@ -86,6 +86,25 @@ let comment = new CommentModel( {
 let gamification = new GamificationModel({
     emailWinner: "alexis.savoie.555@gmail.com",
     levelGet: 10,
+    createdAt: new Date("2021-04-02")
+})
+
+let gamification2 = new GamificationModel({
+    emailWinner: "alexis.savoie.555@gmail.com",
+    levelGet: 20,
+    createdAt: new Date("2021-04-02")
+})
+
+let gamification3 = new GamificationModel({
+    emailWinner: "alexis.savoie.555@gmail.com",
+    levelGet: 30,
+    createdAt: new Date("2021-04-03")
+})
+
+let gamification4 = new GamificationModel({
+    emailWinner: "alexis.savoie.555@gmail.com",
+    levelGet: 40,
+    createdAt: new Date("2021-04-04")
 })
 
 
@@ -139,6 +158,9 @@ const foo = async () => {
     await bill4.save()
     await comment.save()
     await gamification.save()
+    await gamification2.save()
+    await gamification3.save()
+    await gamification4.save()
     await message.save()
     await post.save()
     await product.save()

@@ -2,8 +2,8 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
     // empty/invalid sended data case
     function checkSendedValue() {
         return (req.body.email != undefined && String(req.body.email).match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) == null) ||
-            (req.body.password != undefined && (req.body.password == "" && req.body.password.length < 8 && req.body.password.length > 50)) ||
-            (req.body.newPassword != undefined && (req.body.newPassword == "" && req.body.newPassword.length < 8 && req.body.newPassword.length > 50)) ||
+            (req.body.password != undefined && (req.body.password == "" || req.body.password.length < 8 || req.body.password.length > 50)) ||
+            (req.body.newPassword != undefined && (req.body.newPassword == "" || req.body.newPassword.length < 8 || req.body.newPassword.length > 50)) ||
             // User part
             (req.body.firstNameUser != undefined && (req.body.firstNameUser == "" && req.body.firstNameUser.length < 2 && req.body.firstNameUser.length > 25)) ||
             (req.body.lastNameUser != undefined && (req.body.lastNameUser == "" && req.body.lastNameUser.length < 2 && req.body.lastNameUser.length > 25)) ||
