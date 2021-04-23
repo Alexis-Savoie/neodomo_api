@@ -38,7 +38,12 @@ createUserRoute.post('/application/createUser', middlewareSyntax, (req, res) => 
             else {
                 let user = new UserModel({
                     emailUser: req.body.email,
-                    passwordUser: req.body.password
+                    username: req.body.username,
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    gender: req.body.gender,
+                    accountType: req.body.accountType,
+                    passwordUser: req.body.password,
                 })
                 // Hash the password
                 const salt = bcrypt.genSaltSync(10)
