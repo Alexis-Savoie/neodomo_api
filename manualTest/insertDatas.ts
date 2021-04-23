@@ -23,6 +23,10 @@ let admin = new AdminModel({
 
 let user = new UserModel({
     emailUser: "alexis.savoie.555@gmail.com",
+    firstname: 'Alexis',
+    lastname: 'Savoie',
+    accountType: "association",
+    status: "Association Jeu vidéo GAMING",
     passwordUser: bcrypt.hashSync("bonjour11", bcrypt.genSaltSync(10)),
 })
 

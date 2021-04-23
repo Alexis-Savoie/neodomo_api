@@ -22,6 +22,10 @@ const searchMessageRoute = express()
 searchMessageRoute.post('/admin/searchMessage', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
     let messageSearch: any = {}
 
+     ////////////////////////////////////////////////////////////////////////////////////////////////////
+     if (req.body.idMessage != undefined && req.body.idMessage != "") {
+        messageSearch._id = req.body.idMessage
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.emailSender != undefined && req.body.emailSender != "") {
         let regex = new RegExp(req.body.emailSender, "i")

@@ -18,14 +18,16 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
             (req.body.idProduct != undefined &&(req.body.idProduct == "" || req.body.idProduct.length != 24)) ||
             (req.body.emailSender != undefined && req.body.emailSender == "") ||
             (req.body.replyTo != undefined && req.body.replyTo == "") ||
-            (req.body.gender != undefined && (req.body.gender == "" || req.body.gender != "Homme" || req.body.gender != "Femme" || req.body.gender != "Autre")) ||
-            (req.body.accountType != undefined && (req.body.accountType == "" || req.body.accountType != "eleve" || req.body.accountType != "staff" || req.body.accountType != "association")) ||
+            (req.body.gender != undefined && (req.body.gender == "" && req.body.gender != "Homme" && req.body.gender != "Femme" && req.body.gender != "Autre")) ||
+            (req.body.accountType != undefined && (req.body.accountType == "" && req.body.accountType != "eleve" && req.body.accountType != "staff" && req.body.accountType != "association")) ||
             (req.body.status != undefined && req.body.status == "") ||
             (req.body.isBlocked != undefined && req.body.isBlocked == "") ||
             (req.body.lastActivityFrom != undefined && req.body.lastActivityFrom == "") ||
             (req.body.nameProduct != undefined && req.body.nameProduct == "") ||
             (req.body.description != undefined && req.body.description == "") ||
-            
+
+
+            (req.body.balanceDoomo != undefined && (req.body.balanceDoomo == "" || isNaN(req.body.balanceDoomo))) ||
             (req.body.priceMin != undefined && (req.body.priceMin == "" || isNaN(req.body.priceMin))) ||
             (req.body.priceMax != undefined && (req.body.priceMax == "" || isNaN(req.body.priceMax))) ||
             (req.body.price != undefined && (req.body.price == "" || isNaN(req.body.price))) ||

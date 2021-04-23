@@ -76,14 +76,14 @@ const UserSchema = new Schema<UserDocumentInterface>({
         trim: true,
         index: true,
         type: String,
-        enum: ['eleve', 'staff', 'association']
+        enum: ['eleve', 'staff', 'association'],
+        default: 'eleve'
     },
 
     status: {
         trim: true,
         index: true,
         type: String,
-        default: 'eleve'
     },
 
     passwordUser: {
@@ -141,7 +141,7 @@ const UserSchema = new Schema<UserDocumentInterface>({
     lastActivity: {
         index: true,
         type: Date,
-        default: Date.parse('01 Jan 1970 00:00:00')
+        default: new Date()
     },
 
     currentStreak: {

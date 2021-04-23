@@ -22,6 +22,10 @@ const searchPostRoute = express()
 searchPostRoute.post('/admin/searchPost', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
     let postSearch: any = {}
 
+    if (req.body.idPost != undefined && req.body.idPost != "") {
+        postSearch._id = req.body.idPost
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.emailPublisher != undefined && req.body.emailPublisher != "") {
         let regex = new RegExp(req.body.emailPublisher, "i")
         postSearch.emailPublisher = { $regex: regex }

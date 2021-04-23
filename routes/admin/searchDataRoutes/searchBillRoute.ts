@@ -22,6 +22,9 @@ const searchBillRoute = express()
 searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
     let billSearch: any = {}
 
+    if (req.body.idBill != undefined && req.body.idBill != "") {
+        billSearch._id = req.body.idBill
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.numberBill != undefined && req.body.numberBill != "") {
         billSearch.numberBill = parseInt(req.body.numberBill)
