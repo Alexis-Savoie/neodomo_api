@@ -3,8 +3,9 @@ import { AdminModel } from "../models/adminModel"
 import { BillModel } from "../models/billModel"
 import { CommentModel } from "../models/commentModel"
 import { GamificationModel } from "../models/gamificationModel"
-
 import { LikeModel } from "../models/likeModel"
+
+import { PurchaseModel } from "../models/purchaseModel"
 import { MessageModel } from "../models/messageModel"
 import { PostModel } from "../models/postModel"
 import { ProductModel } from "../models/productModel"
@@ -34,47 +35,50 @@ let bill = new BillModel({
     _id: "607e8ac9ebeece0dd8291d9f",
     numberBill: 9991,
     emailBuyer: "alexis.savoie.555@gmail.com",
-    description: "300 Domo",
-    price: 3.0,
+    description: "1000 Domo",
+    price: 10.0,
     paymentMethod: "CB",
     idProduct: "507e8ac9ebeece0dd8291d9f",
     createdAt: new Date("2021-04-01")
 })
 
-let bill2 = new BillModel({
+
+let purchase = new PurchaseModel({
     _id: "607e8ac9ebeece0dd8291d91",
-    numberBill: 9992,
     emailBuyer: "alexis.savoie.555@gmail.com",
-    description: "300 Domo",
-    price: 3.0,
-    paymentMethod: "CB",
+    quantity: 1,
+    price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-02")
+    createdAt: new Date("2021-04-01")
 })
 
-
-let bill3 = new BillModel({
+let purchase2 = new PurchaseModel({
     _id: "607e8ac9ebeece0dd8291d92",
-    numberBill: 9993,
     emailBuyer: "alexis.savoie.555@gmail.com",
-    description: "300 Domo",
-    price: 3.0,
-    paymentMethod: "CB",
+    quantity: 1,
+    price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-02")
+    createdAt: new Date("2021-04-01")
 })
 
-
-let bill4 = new BillModel({
+let purchase3 = new PurchaseModel({
     _id: "607e8ac9ebeece0dd8291d93",
-    numberBill: 9994,
     emailBuyer: "alexis.savoie.555@gmail.com",
-    description: "300 Domo",
-    price: 3.0,
-    paymentMethod: "CB",
+    quantity: 1,
+    price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-03")
+    createdAt: new Date("2021-04-01")
 })
+
+let purchase4 = new PurchaseModel({
+    _id: "607e8ac9ebeece0dd8291d94",
+    emailBuyer: "alexis.savoie.555@gmail.com",
+    quantity: 1,
+    price: 10.0,
+    idProduct: "507e8ac9ebeece0dd8291d9f",
+    createdAt: new Date("2021-04-01")
+})
+
 
 
 
@@ -157,9 +161,10 @@ let product2 = new ProductModel({
 const foo = async () => {
     await admin.save()
     await bill.save() 
-    await bill2.save() 
-    await bill3.save() 
-    await bill4.save()
+    await purchase.save() 
+    await purchase2.save() 
+    await purchase3.save() 
+    await purchase4.save() 
     await comment.save()
     await gamification.save()
     await gamification2.save()

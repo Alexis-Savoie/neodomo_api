@@ -49,6 +49,8 @@ adminRoutes.use("/", editUserAdminRoute)
 // Search data routes
 import { searchBillRoute } from "./searchDataRoutes/searchBillRoute"
 adminRoutes.use("/", searchBillRoute)
+import { searchPurchaseRoute } from "./searchDataRoutes/searchPurchaseRoute"
+adminRoutes.use("/", searchPurchaseRoute)
 import { searchCommentRoute } from "./searchDataRoutes/searchCommentRoute"
 adminRoutes.use("/", searchCommentRoute)
 import { searchGamificationRoute } from "./searchDataRoutes/searchGamificationRoute"
