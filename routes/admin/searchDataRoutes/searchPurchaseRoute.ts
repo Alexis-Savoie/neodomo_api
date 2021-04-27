@@ -66,7 +66,7 @@ searchPurchaseRoute.post('/admin/searchPurchase', middlewareSessionAdmin, middle
                 {
                     error: false,
                     message: "succès (non-vide)",
-                    bills: results
+                    purchases: results
                 });
         }
     })

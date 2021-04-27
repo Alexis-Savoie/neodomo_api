@@ -58,7 +58,7 @@ let purchase2 = new PurchaseModel({
     quantity: 1,
     price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-01")
+    createdAt: new Date("2021-04-02")
 })
 
 let purchase3 = new PurchaseModel({
@@ -67,7 +67,7 @@ let purchase3 = new PurchaseModel({
     quantity: 1,
     price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-01")
+    createdAt: new Date("2021-04-03")
 })
 
 let purchase4 = new PurchaseModel({
@@ -76,7 +76,7 @@ let purchase4 = new PurchaseModel({
     quantity: 1,
     price: 10.0,
     idProduct: "507e8ac9ebeece0dd8291d9f",
-    createdAt: new Date("2021-04-01")
+    createdAt: new Date("2021-04-03")
 })
 
 
