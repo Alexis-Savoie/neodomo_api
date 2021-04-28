@@ -120,7 +120,7 @@ let message = new MessageModel({
     emailSender: "alexis.savoie.555@gmail.com",
     emailReceiver: "searchMessageRoute_999@email.com",
     textContent: "Ceci est est un test de message incroyable",
-    imageURL: "http://serveur.fr/image.png",
+    imageURL: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
 })
 
 
@@ -128,7 +128,7 @@ let post = new PostModel({
     _id: "607e8ac9ebeece0dd8291d9f",
     emailPublisher: "alexis.savoie.555@gmail.com",
     textContent: "Ceci est est un test de post incroyableee",
-    listImage: [{ URL: "www.test.com/image.png" }],
+    listImage: [{ URL: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png" }],
     listLike: [{ id: "hogzjovfzegvivzniovz" }],
     listComment: [{ id: "hogzjovznjoivzniovz" }],
     listReport: [{ id: "jotiobnvznvnzeinicae" }]
@@ -141,7 +141,7 @@ let product = new ProductModel({
     description: "Ceci est est un test de produit incroyable",
     price: 1000,
     availableStock: 10,
-    imageURL: "www.test.com/image.png",
+    imageURL: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
     listBill: [{ id: "jotiobnvznvnzeinicae" }]
 })
 
@@ -150,7 +150,7 @@ let product2 = new ProductModel({
     description: "Ceci est est un test de produit incroyable 2",
     price: 1000,
     availableStock: 10,
-    imageURL: "www.test.com/image2.png",
+    imageURL: "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
     listBill: []
 })
 

@@ -36,7 +36,7 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
             (req.body.availableStock != undefined && (req.body.availableStock == ""  || isNaN(req.body.availableStock))) ||
             (req.body.nbSellMin != undefined && (req.body.nbSellMin == ""  || isNaN(req.body.nbSellMin))) ||
             (req.body.nbSellMax != undefined && (req.body.nbSellMax == ""  || isNaN(req.body.nbSellMax))) ||
-            (req.body.imageURL != undefined && req.body.imageURL == "") ||
+            (req.body.imageURL != undefined && String(req.body.imageURL).match(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) == null) ||
             
             (req.body.buyedBy != undefined && req.body.buyedBy == "") ||
             (req.body.numberBill != undefined && req.body.numberBill == "") ||
