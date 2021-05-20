@@ -1,3 +1,5 @@
+import validator from 'validator'
+
 const middlewareSyntax = (req:any, res:any, next:any) => {
     // empty/invalid sended data case
     function checkSendedValue() {
@@ -10,19 +12,19 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
 
 
             // Admin part
-            (req.body.emailPublisher != undefined && req.body.emailPublisher == "") ||
+            (req.body.emailPublisher != undefined && validator.isEmail(req.body.emailPublisher) == false) ||
             (req.body.textContent != undefined && req.body.textContent == "") ||
-            (req.body.createdAtFrom != undefined && req.body.createdAtFrom == "") ||
-            (req.body.createdAtAt != undefined && req.body.createdAtAt == "") ||
-            (req.body.idPost != undefined && (req.body.idPost == "" || req.body.idPost.length != 24)) ||
-            (req.body.idProduct != undefined &&(req.body.idProduct == "" || req.body.idProduct.length != 24)) ||
-            (req.body.emailSender != undefined && req.body.emailSender == "") ||
-            (req.body.replyTo != undefined && req.body.replyTo == "") ||
+            (req.body.createdAtFrom != undefined && validator.isDate(req.body.createdAtFrom) == false) ||
+            (req.body.createdAtAt != undefined && validator.isDate(req.body.createdAtAt) == false) ||
+            (req.body.idPost != undefined && validator.isMongoId(req.body.idPost) == false) ||
+            (req.body.idProduct != undefined && validator.isMongoId(req.body.idProduct) == false) ||
+            (req.body.emailSender != undefined && validator.isEmail(req.body.emailSender)) ||
+            (req.body.replyTo != undefined && validator.isEmail(req.body.replyTo)) ||
             (req.body.gender != undefined && (req.body.gender == "" && req.body.gender != "Homme" && req.body.gender != "Femme" && req.body.gender != "Autre")) ||
             (req.body.accountType != undefined && (req.body.accountType == "" && req.body.accountType != "eleve" && req.body.accountType != "staff" && req.body.accountType != "association")) ||
             (req.body.status != undefined && req.body.status == "") ||
             (req.body.isBlocked != undefined && req.body.isBlocked == "") ||
-            (req.body.lastActivityFrom != undefined && req.body.lastActivityFrom == "") ||
+            (req.body.lastActivityFrom != undefined && validator.isDate(req.body.lastActivityFrom) == false) ||
             (req.body.nameProduct != undefined && req.body.nameProduct == "") ||
             (req.body.description != undefined && req.body.description == "") ||
 
@@ -38,14 +40,14 @@ const middlewareSyntax = (req:any, res:any, next:any) => {
             (req.body.nbSellMax != undefined && (req.body.nbSellMax == ""  || isNaN(req.body.nbSellMax))) ||
             (req.body.imageURL != undefined && String(req.body.imageURL).match(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) == null) ||
             
-            (req.body.buyedBy != undefined && req.body.buyedBy == "") ||
-            (req.body.numberBill != undefined && req.body.numberBill == "") ||
-            (req.body.emailBuyer != undefined && req.body.emailBuyer == "") ||
-            (req.body.dateBillMin != undefined && req.body.dateBillMin == "") ||
-            (req.body.dateBillMax != undefined && req.body.dateBillMax == "") ||
+            (req.body.buyedBy != undefined && validator.isEmail(req.body.buyedBy) == false) ||
+            (req.body.numberBill != undefined && isNaN(req.body.numberBill)) ||
+            (req.body.emailBuyer != undefined && validator.isEmail(req.body.emailBuyer) == false) ||
+            (req.body.dateBillMin != undefined && validator.isDate(req.body.dateBillMin) == false) ||
+            (req.body.dateBillMax != undefined && validator.isDate(req.body.dateBillMax) == false) ||
             
-            (req.body.emailWinner != undefined && req.body.emailWinner == "") ||
-            (req.body.levelGet != undefined && req.body.levelGet == "") ||
+            (req.body.emailWinner != undefined && validator.isEmail(req.body.emailWinner) == false) ||
+            (req.body.levelGet != undefined && isNaN(req.body.levelGet)) ||
 
             (req.body.haveReport != undefined && req.body.haveReport == "")
     }

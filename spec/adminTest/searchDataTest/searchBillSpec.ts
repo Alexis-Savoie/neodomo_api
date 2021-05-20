@@ -21,12 +21,12 @@ let testCorrectPassword = "bonjour123"
 
 
 
-fdescribe('searchBillRoute success cases', () => {
+describe('searchBillRoute success cases', () => {
 
     it('Correct case (string operator)', (done) => {
         let emailForTest = "searchBillRoute_1@email.com"
         let billForTest = {
-            numberBill: 9991,
+            numberBill: 8991,
             emailBuyer: "searchBillRoute_user1@email.com",
             description: "300 Domo",
             price: 3.0,
