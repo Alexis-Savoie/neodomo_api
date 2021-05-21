@@ -16,7 +16,6 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 
 let API_URL: string = process.env.API_URL!
-let JWT_TOKEN_SECRET_ADMIN: string = process.env.JWT_TOKEN_SECRET_ADMIN!
 
 let testCorrectPassword = "bonjour123"
 

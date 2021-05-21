@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import models
 import { AdminModel } from "../../../models/adminModel"
-import { PostModel } from "../../../models/postModel"
+import { MessageModel } from "../../../models/messageModel"
 
 // Import env variables
 import path from 'path'
@@ -21,31 +21,31 @@ let testCorrectPassword = "bonjour123"
 
 
 
-describe('deletePostRoute success cases', () => {
+describe('deleteMessageRoute success cases', () => {
 
     it('Correct case', (done) => {
-        let emailForTest = "deletePostRoute_1@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyable",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+        let emailForTest = "deleteMessageRoute_1@email.com"
+
+        let messageForTest = {
+            emailSender: emailForTest,
+            emailReceiver: "searchMessageRoute_999@email.com",
+            textContent: "Ceci est est un test de message incroyable",
+            imageURL: "http://serveur.fr/image.png",
         }
+
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new MessageModel(messageForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                MessageModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idMessage = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -56,8 +56,8 @@ describe('deletePostRoute success cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + idPost)
+                                    .delete('/admin/deleteMessage')
+                                    .send('idMessage=' + idMessage)
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(200)
@@ -85,31 +85,29 @@ describe('deletePostRoute success cases', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-describe('deletePostRoute error cases', () => {
+describe('deleteCommentRoute error cases', () => {
 
-    it('Incorrect post id', (done) => {
-        let emailForTest = "deletePostRoute_2@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyablee",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+    it('Incorrect comment id', (done) => {
+        let emailForTest = "deleteCommentRoute_2@email.com"
+        let messageForTest = {
+            emailSender: emailForTest,
+            emailReceiver: "searchMessageRoute_999@email.com",
+            textContent: "Ceci est est un test de message incroyable",
+            imageURL: "http://serveur.fr/image.png",
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new MessageModel(messageForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                MessageModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idMessage = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -120,7 +118,7 @@ describe('deletePostRoute error cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
+                                    .delete('/admin/deleteMessage')
                                     .send('idPost=' + "60758a57ad3fcd383cd497ce")
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
@@ -129,7 +127,7 @@ describe('deletePostRoute error cases', () => {
                                         if (err) throw err;
                                         else {
                                             AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
-                                                PostModel.findOneAndDelete({ _id: idPost }, null, function (err, results) {
+                                                MessageModel.findOneAndDelete({ _id: idMessage }, null, function (err, results) {
                                                     return done()
                                                 })
                                             })
