@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import middleware
 import { middlewareSyntax } from '../../../middlewares/middlewareSyntax'
-import { middlewareSessionUser } from '../../../middlewares/middlewareSessionUser'
+//import { middlewareSessionUser } from '../../../middlewares/middlewareSessionUser'
 
 // Import models
 import { UserModel } from "../../../models/userModel"
@@ -14,7 +14,7 @@ import { UserModel } from "../../../models/userModel"
 const createUserRoute = express()
 
 // Route for the export
-createUserRoute.post('/application/createUser', middlewareSyntax, middlewareSessionUser, (req, res) => {
+createUserRoute.post('/application/createUser', middlewareSyntax, (req, res) => {
 
     UserModel.find({ emailUser: req.body.email }, function (error, results) {
         if (error) {

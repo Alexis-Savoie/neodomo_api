@@ -14,7 +14,10 @@ import { addProductRoute } from "./shopRoutes/addProductRoute"
 import { deleteProductRoute } from "./shopRoutes/deleteProductRoute"
 import { editProductRoute } from "./shopRoutes/editProductRoute"
 
-import { deleteCommentRoute } from "./postRoutes/deleteComment"
+import { deleteCommentRoute } from "./postRoutes/deleteCommentRoute"
+import { addCommentRoute } from "./postRoutes/addCommentRoute"
+import { deletePostRoute } from "./postRoutes/deletePostRoute"
+import { addPostRoute } from "./postRoutes/addPostRoute"
 
 
 // Add imported routes to the admin app
@@ -33,5 +36,8 @@ applicationRoutes.use("/", deleteProductRoute)
 applicationRoutes.use("/", editProductRoute)
 
 applicationRoutes.use("/", deleteCommentRoute)
+applicationRoutes.use("/", addCommentRoute)
+applicationRoutes.use("/", deletePostRoute)
+applicationRoutes.use("/", addPostRoute)
 
 export { applicationRoutes }
