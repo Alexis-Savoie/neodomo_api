@@ -12,11 +12,11 @@ let API_URL:string = process.env.API_URL!
 
 describe('Test jasmine (admin)', () => {
 
-    it('Test testing (admin)', (done) => {
+    it('Test testing (admin)', () => {
         request(API_URL)
             .get('/admin/test')
             .set('Accept', 'application/json')
-            .expect(200, done)
+            .expect(200)
     })
 
 })

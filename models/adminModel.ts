@@ -2,6 +2,9 @@
 import mongoose from 'mongoose'
 import { Document, Model, model, Types, Schema, Query } from "mongoose"
 
+// Import interfaces
+import AdminDocumentInterface from '../interfaces/AdminDocumentInterface'
+
 // Import env variables
 import path from 'path'
 import dotenv from 'dotenv'
@@ -12,22 +15,24 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-let uri:string = process.env.DB_URL!
+const uri = process.env.DB_URL as string
 mongoose.connect(uri,  { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
         console.log(err.message);
         console.log(err);
     }
     else {
-        console.log('Connected to MongoDb');
+        //console.log('Connected to MongoDb');
     }
 });
 
 //#endregion
 
 
+
+
 // Schema
-const AdminSchema = new Schema({
+const AdminSchema = new Schema<AdminDocumentInterface>({
     emailAdmin: {
         trim: true,
         index: true,
