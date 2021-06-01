@@ -6,8 +6,7 @@ import cors from 'cors'
 // Import routes
 import { routes } from './routes/indexRoute'
 
-<<<<<<< HEAD
-=======
+
 
 // Import models
 import { PostModel } from './models/postModel'
@@ -23,7 +22,6 @@ let post = new PostModel({
 
 post.save()
 */
->>>>>>> 8f33feaeb8d24779f956b406c9435bde5c905cd1
 const app = express() // Instance Express
 
 
