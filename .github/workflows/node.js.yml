@@ -20,6 +20,15 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    env:
+      API_URL: ${{ secrets.API_KEY }}
+      DB_URL: ${{ secrets.DB_URL }}
+      ENV: ${{ secrets.ENV }}
+      JWT_TOKEN_SECRET_ADMIN: ${{ secrets.JWT_TOKEN_SECRET_ADMIN }}
+      JWT_TOKEN_SECRET_USER: ${{ secrets.JWT_TOKEN_SECRET_USER }}
+      RESETEMAIL: ${{ secrets.RESETEMAIL }}
+      RESETPASSWORD: ${{ secrets.RESETPASSWORD }}
+
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
