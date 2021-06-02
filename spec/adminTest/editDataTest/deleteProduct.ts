@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import models
 import { AdminModel } from "../../../models/adminModel"
-import { PostModel } from "../../../models/postModel"
+import { ProductModel } from "../../../models/productModel"
 
 // Import env variables
 import path from 'path'
@@ -21,31 +21,33 @@ let testCorrectPassword = "bonjour123"
 
 
 
-describe('deletePostRoute success cases', () => {
+describe('deleteProductRoute success cases', () => {
 
     it('Correct case', (done) => {
-        let emailForTest = "deletePostRoute_1@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyable",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+        let emailForTest = "deleteProductRoute_1@email.com"
+
+        let productForTest = {
+            nameProduct: "deleteProductRoute_1",
+            description: "Ceci est est un test de produit incroyable",
+            price: 1000,
+            availableStock: 10,
+            imageURL: "www.test.com/image.png",
+            listBill: [{ id: "jotiobnvznvnzeinicae" }]
         }
+
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new ProductModel(productForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                ProductModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idProduct = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -56,8 +58,8 @@ describe('deletePostRoute success cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + idPost)
+                                    .delete('/admin/deleteProduct')
+                                    .send('idProduct=' + idProduct)
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(200)
@@ -85,31 +87,31 @@ describe('deletePostRoute success cases', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-describe('deletePostRoute error cases', () => {
+describe('deleteProductRoute error cases', () => {
 
-    it('Incorrect post id', (done) => {
-        let emailForTest = "deletePostRoute_2@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyablee",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+    it('Incorrect product id', (done) => {
+        let emailForTest = "deleteCommentRoute_2@email.com"
+        let productForTest = {
+            nameProduct: "deleteProductRoute_1",
+            description: "Ceci est est un test de produit incroyable",
+            price: 1000,
+            availableStock: 10,
+            imageURL: "www.test.com/image.png",
+            listBill: [{ id: "jotiobnvznvnzeinicae" }]
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new ProductModel(productForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                ProductModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idProduct = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -120,8 +122,8 @@ describe('deletePostRoute error cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + "60758a57ad3fcd383cd497ce")
+                                    .delete('/admin/deleteProduct')
+                                    .send('idProduct=' + "60758a57ad3fcd383cd497ce")
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(422)
@@ -129,7 +131,7 @@ describe('deletePostRoute error cases', () => {
                                         if (err) throw err;
                                         else {
                                             AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
-                                                PostModel.findOneAndDelete({ _id: idPost }, null, function (err, results) {
+                                                ProductModel.findOneAndDelete({ _id: idProduct }, null, function (err, results) {
                                                     return done()
                                                 })
                                             })

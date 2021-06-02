@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import models
 import { AdminModel } from "../../../models/adminModel"
-import { PostModel } from "../../../models/postModel"
+import { BillModel } from "../../../models/billModel"
 
 // Import env variables
 import path from 'path'
@@ -21,31 +21,34 @@ let testCorrectPassword = "bonjour123"
 
 
 
-describe('deletePostRoute success cases', () => {
+describe('deleteBillRoute success cases', () => {
 
     it('Correct case', (done) => {
-        let emailForTest = "deletePostRoute_1@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyable",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+        let emailForTest = "deleteBillRoute_1@email.com"
+        let numberBill = 75875
+
+        let billForTest = {
+            numberBill: numberBill,
+            emailBuyer: "searchBillRoute_user1@email.com",
+            description: "300 Domo",
+            price: 3.0,
+            paymentMethod: "CB",
+            idProduct: "vnozehvineozjoejajc"
         }
+
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new BillModel(billForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                BillModel.find({ numberBill: numberBill }, function (error, results) {
+                    let idBill = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -56,8 +59,8 @@ describe('deletePostRoute success cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + idPost)
+                                    .delete('/admin/deleteBill')
+                                    .send('idBill=' + idBill)
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(200)
@@ -85,31 +88,33 @@ describe('deletePostRoute success cases', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-describe('deletePostRoute error cases', () => {
+describe('deleteBillRoute error cases', () => {
 
-    it('Incorrect post id', (done) => {
-        let emailForTest = "deletePostRoute_2@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyablee",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+    it('Incorrect product id', (done) => {
+        let emailForTest = "deleteBillRoute_2@email.com"
+        let numberBill = 75876
+
+        let billForTest = {
+            numberBill: numberBill,
+            emailBuyer: "searchBillRoute_user1@email.com",
+            description: "300 Domo",
+            price: 3.0,
+            paymentMethod: "CB",
+            idProduct: "vnozehvineozjoejajc"
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new BillModel(billForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                BillModel.find({ numberBill: numberBill }, function (error, results) {
+                    let idBill = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -120,8 +125,8 @@ describe('deletePostRoute error cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + "60758a57ad3fcd383cd497ce")
+                                    .delete('/admin/deleteBill')
+                                    .send('idBill=' + "60758a57ad3fcd383cd497ce")
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(422)
@@ -129,7 +134,7 @@ describe('deletePostRoute error cases', () => {
                                         if (err) throw err;
                                         else {
                                             AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
-                                                PostModel.findOneAndDelete({ _id: idPost }, null, function (err, results) {
+                                                BillModel.findOneAndDelete({ _id: idBill }, null, function (err, results) {
                                                     return done()
                                                 })
                                             })

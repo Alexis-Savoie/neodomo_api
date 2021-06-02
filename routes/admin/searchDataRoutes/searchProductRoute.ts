@@ -22,6 +22,11 @@ const searchProductRoute = express()
 searchProductRoute.post('/admin/searchProduct', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
     let productSearch: any = {}
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (req.body.idProduct != undefined && req.body.idProduct != "") {
+        productSearch._id = req.body.idProduct
+    }
+    
     if (req.body.nameProduct != undefined && req.body.nameProduct != "") {
         let regex = new RegExp(req.body.nameProduct, "i")
         productSearch.nameProduct = { $regex: regex }

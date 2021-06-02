@@ -28,7 +28,6 @@ describe('searchUserRoute success cases', () => {
         let userForTest = {
             emailUser: "searchUserRoute_user1@email.com",
             passwordUser: testCorrectPassword,
-
         }
         // Create an admin for the test
         let admin = new AdminModel({
