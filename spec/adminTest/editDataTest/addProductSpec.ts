@@ -18,9 +18,6 @@ let API_URL: string = process.env.API_URL!
 let testCorrectPassword = "bonjour123"
 
 
-
-
-
 describe('addProductRoute success cases', () => {
 
     it('Correct case', (done) => {
