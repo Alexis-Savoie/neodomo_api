@@ -7,6 +7,7 @@ import cors from 'cors'
 import { routes } from './routes/indexRoute'
 
 
+
 // Import models
 import { PostModel } from './models/postModel'
 /*
