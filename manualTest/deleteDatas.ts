@@ -12,7 +12,6 @@ import { UserModel } from "../models/userModel"
 
 
 
-
 AdminModel.deleteMany({}).then(function(){
     BillModel.deleteMany({}).then(function(){
         CommentModel.deleteMany({}).then(function(){
