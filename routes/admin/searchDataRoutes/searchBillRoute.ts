@@ -22,9 +22,12 @@ const searchBillRoute = express()
 searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSyntaxSearchNumber, (req, res) => {
     let billSearch: any = {}
 
+    if (req.body.idBill != undefined && req.body.idBill != "") {
+        billSearch._id = req.body.idBill
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.numberBill != undefined && req.body.numberBill != "") {
-        billSearch.numberBill = req.body.numberBill
+        billSearch.numberBill = parseInt(req.body.numberBill)
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if (req.body.emailBuyer != undefined && req.body.emailBuyer != "") {
@@ -66,8 +69,6 @@ searchBillRoute.post('/admin/searchBill', middlewareSessionAdmin, middlewareSynt
         createdAtAt = new Date(req.body.createdAtAt)
     }
     billSearch.createdAt = { $gte: createdAtFrom, $lte: createdAtAt }
-
-
 
 
     BillModel.find(billSearch, function (error, results) {

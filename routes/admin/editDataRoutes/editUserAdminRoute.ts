@@ -41,15 +41,25 @@ editUserAdminRoute.put('/admin/editUser', middlewareSyntax, middlewareSessionAdm
         userUpdate.status = req.body.status
 
 
-
-
-        UserModel.findOneAndUpdate({ emailUser: req.body.email }, userUpdate, { upsert: true }, function (error, results) {
-        res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
-        res.status(200).json(
-            {
-                error: false,
-                message: "L'utilisateur à été modifié avec succès"
-            });
+    UserModel.find({ emailUser: req.body.email }, function (error, results) {
+        if (results == null || results.length == 0) {
+            res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+            res.status(422).json(
+                {
+                    error: true,
+                    message: "Aucun utilisateur utilise cette adresse email"
+                });
+        }
+        else {
+            UserModel.findOneAndUpdate({ emailUser: req.body.email }, userUpdate, { upsert: true }, function (error, results) {
+                res.setHeader("Content-Type", "application/json"); // Typage de la data de retour
+                res.status(200).json(
+                    {
+                        error: false,
+                        message: "L'utilisateur à été modifié avec succès"
+                    });
+            })
+        }
     })
 })
 

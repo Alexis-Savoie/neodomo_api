@@ -42,6 +42,8 @@ import { editProductRoute } from "./editDataRoutes/editProductRoute"
 adminRoutes.use("/", editProductRoute)
 import { editUserAdminRoute } from "./editDataRoutes/editUserAdminRoute"
 adminRoutes.use("/", editUserAdminRoute)
+import { deleteUserRoute } from "./editDataRoutes/deleteUserRoute"
+adminRoutes.use("/", deleteUserRoute)
 
 
 
@@ -49,6 +51,8 @@ adminRoutes.use("/", editUserAdminRoute)
 // Search data routes
 import { searchBillRoute } from "./searchDataRoutes/searchBillRoute"
 adminRoutes.use("/", searchBillRoute)
+import { searchPurchaseRoute } from "./searchDataRoutes/searchPurchaseRoute"
+adminRoutes.use("/", searchPurchaseRoute)
 import { searchCommentRoute } from "./searchDataRoutes/searchCommentRoute"
 adminRoutes.use("/", searchCommentRoute)
 import { searchGamificationRoute } from "./searchDataRoutes/searchGamificationRoute"

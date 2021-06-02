@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import models
 import { AdminModel } from "../../../models/adminModel"
-import { BillModel } from "../../../models/billModel"
+import { PurchaseModel } from "../../../models/purchaseModel"
 
 // Import env variables
 import path from 'path'
@@ -21,24 +21,23 @@ let testCorrectPassword = "bonjour123"
 
 
 
-describe('searchBillRoute success cases', () => {
+describe('searchPurchaseRoute success cases', () => {
 
     it('Correct case (string operator)', (done) => {
-        let emailForTest = "searchBillRoute_1@email.com"
-        let billForTest = {
-            numberBill: 8991,
-            emailBuyer: "searchBillRoute_user1@email.com",
-            description: "300 Domo",
-            price: 3.0,
-            paymentMethod: "CB",
-            idProduct: "vnozehvineozjoejajc"
+        let emailForTest = "searchPurchaseRoute_1@email.com"
+
+        let purchaseForTest = {
+            emailBuyer: emailForTest,
+            quantity: 1,
+            price: 500,
+            idProduct: "jotiaanvznvnzeinicaz"
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let bill = new BillModel(billForTest)
+        let bill = new PurchaseModel(purchaseForTest)
         
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
@@ -55,19 +54,19 @@ describe('searchBillRoute success cases', () => {
                         else {
                             let token = res.body.token
                             request(API_URL)
-                                .post('/admin/searchBill')
-                                .send('emailBuyer=' + "searchBillRoute")
+                                .post('/admin/searchPurchase')
+                                .send('emailBuyer=' + emailForTest)
                                 .set('Accept', 'application/json')
                                 .set('Authorization', 'Bearer ' + token)
                                 .expect(200)
                                 .end(function (err: any, res: any) {
                                     if (err) throw err;
                                     else {
-                                        if (!res.body.bills) {
-                                            throw ("err bill search")
+                                        if (!res.body.purchases) {
+                                            throw ("err purchase search")
                                         }
                                         AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
-                                            BillModel.findOneAndDelete({ emailBuyer: billForTest.emailBuyer }, null, function (err, results) {
+                                            PurchaseModel.findOneAndDelete({ emailBuyer: emailForTest }, null, function (err, results) {
                                                 return done()
                                             })
                                         })

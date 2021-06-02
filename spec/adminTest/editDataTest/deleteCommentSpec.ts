@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 
 // Import models
 import { AdminModel } from "../../../models/adminModel"
-import { PostModel } from "../../../models/postModel"
+import { CommentModel } from "../../../models/commentModel"
 
 // Import env variables
 import path from 'path'
@@ -21,31 +21,31 @@ let testCorrectPassword = "bonjour123"
 
 
 
-describe('deletePostRoute success cases', () => {
+describe('deleteCommentRoute success cases', () => {
 
     it('Correct case', (done) => {
-        let emailForTest = "deletePostRoute_1@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
+        let emailForTest = "deleteCommentRoute_1@email.com"
+
+        let commentForTest = {
+            idPost: "dzefagrddvzqzdgerzvfzerg",
+            emailSender: emailForTest,
             textContent: "Ceci est est un test de post incroyable",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+            replyTo: "dzefagrddvzqedgerzvfzerg",
+            haveReport: false
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new CommentModel(commentForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                CommentModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idComment = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -56,8 +56,8 @@ describe('deletePostRoute success cases', () => {
                             else {
                                 let token = res.body.token
                                 request(API_URL)
-                                    .delete('/admin/deletePost')
-                                    .send('idPost=' + idPost)
+                                    .delete('/admin/deleteComment')
+                                    .send('idComment=' + idComment)
                                     .set('Accept', 'application/json')
                                     .set('Authorization', 'Bearer ' + token)
                                     .expect(200)
@@ -85,31 +85,30 @@ describe('deletePostRoute success cases', () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-describe('deletePostRoute error cases', () => {
+describe('deleteCommentRoute error cases', () => {
 
-    it('Incorrect post id', (done) => {
-        let emailForTest = "deletePostRoute_2@email.com"
-        let postForTest = {
-            emailPublisher: emailForTest,
-            textContent: "Ceci est est un test de post incroyablee",
-            listImage: [{ URL: "www.test.com/image.png" }],
-            listLike: [{ id: "hogzjovfzegvivzniovz" }],
-            listComment: [{ id: "hogzjovznjoivzniovz" }],
-            listReport: [{ id: "jotiobnvznvnzeinicae" }]
+    it('Incorrect comment id', (done) => {
+        let emailForTest = "deleteCommentRoute_2@email.com"
+        let commentForTest = {
+            idPost: "dzefagrddvzqzdgerzvfzerg",
+            emailSender: emailForTest,
+            textContent: "Ceci est est un test de post incroyable",
+            replyTo: "dzefagrddvzqedgerzvfzerg",
+            haveReport: false
         }
         // Create an admin for the test
         let admin = new AdminModel({
             emailAdmin: emailForTest,
             passwordAdmin: testCorrectPassword
         })
-        let post = new PostModel(postForTest)
+        let post = new CommentModel(commentForTest)
         // Hash the password
         const salt = bcrypt.genSaltSync(10)
         admin.passwordAdmin = bcrypt.hashSync(admin.passwordAdmin, salt)
         admin.save().then(() => {
             post.save().then(() => {
-                PostModel.find({ emailPublisher: emailForTest }, function (error, results) {
-                    let idPost = results[0]._id
+                CommentModel.find({ emailSender: emailForTest }, function (error, results) {
+                    let idComment = results[0]._id
                     request(API_URL)
                         .post('/admin/login')
                         .send('email=' + emailForTest + '&password=' + testCorrectPassword)
@@ -129,7 +128,7 @@ describe('deletePostRoute error cases', () => {
                                         if (err) throw err;
                                         else {
                                             AdminModel.findOneAndDelete({ emailAdmin: emailForTest }, null, function (err, results) {
-                                                PostModel.findOneAndDelete({ _id: idPost }, null, function (err, results) {
+                                                CommentModel.findOneAndDelete({ _id: idComment }, null, function (err, results) {
                                                     return done()
                                                 })
                                             })

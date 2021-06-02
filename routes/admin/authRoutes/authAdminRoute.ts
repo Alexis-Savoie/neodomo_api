@@ -63,7 +63,7 @@ authAdminRoute.post('/admin/login', middlewareSyntax, (req, res) => {
                     bcrypt.compare(req.body.password, results[0].passwordAdmin).then(isOk => {
                         if (isOk) {
                             //Version that never expire
-                            var token = jwt.sign(req.body.email, JWT_TOKEN_SECRET_ADMIN, { algorithm: "HS256" })
+                            let token = jwt.sign(req.body.email, JWT_TOKEN_SECRET_ADMIN, { algorithm: "HS256" })
 
                             let email = results[0].emailAdmin;
                             AdminModel.findOneAndUpdate({ _id: results[0]._id }, { tokenAdmin: token, nbLoginTryAdmin: 0 }, { upsert: true }, function (error, results2) {
