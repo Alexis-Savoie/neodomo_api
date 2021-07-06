@@ -175,9 +175,13 @@ const foo = async () => {
     await product.save()
     await product2.save()
     await user.save()
+
+
+
+    
     console.log("insertion done")
     process.exit(1)
-  };
+};
 
 foo()
 
